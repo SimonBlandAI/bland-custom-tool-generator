@@ -1,4 +1,4 @@
-import Anthropic, { CompletionCreateParams } from '@anthropic-ai/sdk';
+import { Anthropic } from '@anthropic-ai/sdk';
 import { ILLM } from '../interfaces/ILLM';
 
 interface Generation {
@@ -44,14 +44,14 @@ class AnthropicLLM implements ILLM {
   }
 
   private async callAnthropicAPI(prompt: string): Promise<string> {
-    const params: CompletionCreateParams = {
+    const params: Messages.MessageCreateParams = {
       model: this.currentModel,
-      prompt: prompt,
-      max_tokens_to_sample: 300,
+      messages: [{ role: "user", content: prompt }],
+      max_tokens: 300,
     };
 
-    const response = await this.client.completions.create(params);
-    return response.completion;
+    const response = await this.client.messages.create(params);
+    return response.content[0]["text"] ?? '';
   }
 
   setModel(model: AnthropicModel): void {
