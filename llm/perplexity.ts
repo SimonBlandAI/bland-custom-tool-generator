@@ -16,18 +16,18 @@ interface HistoryItem {
   model: string;
 }
 
-class PerplexityLLM implements ILLM {
+export class PerplexityLLM implements ILLM {
   private history: HistoryItem[];
   private generations: Generation[];
   private variables: Map<string, string>;
   private apiKey: string;
   private currentModel: string;
 
-  constructor(apiKey: string, model: string = 'codellama-34b-instruct') {
+  constructor( model: string = 'codellama-34b-instruct') {
     this.history = [];
     this.generations = [];
     this.variables = new Map();
-    this.apiKey = apiKey;
+    this.apiKey = process.env.PERPLEXITY_API_KEY ?? "";
     this.currentModel = model;
   }
 

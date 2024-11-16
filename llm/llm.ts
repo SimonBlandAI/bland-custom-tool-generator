@@ -1,13 +1,13 @@
 import { CompletionCreateParams, AnthropicClient } from '@anthropic-ai/sdk';
 
-interface Generation {
+export interface Generation {
   id: string;
   text: string;
   timestamp: Date;
   model: string;
 }
 
-interface HistoryItem {
+export interface HistoryItem {
   id: string;
   prompt: string;
   completion: string;
@@ -15,16 +15,16 @@ interface HistoryItem {
   model: string;
 }
 
-type AnthropicModel = 'claude-2' | 'claude-instant-1' | 'claude-1' | 'claude-instant-1.1';
+type AnthropicModel = 'claude-3-opus-20240229' | 'claude-3-sonnet-20240229' | 'claude-3-haiku-20240229';
 
-class BaseLLM {
+export class BaseLLM {
   private history: HistoryItem[];
   private generations: Generation[];
   private variables: Map<string, string>;
   private client: AnthropicClient;
   private currentModel: AnthropicModel;
 
-  constructor(apiKey: string, model: AnthropicModel = 'claude-2') {
+  constructor(apiKey: string, model: AnthropicModel = 'claude-3-haiku-20240229') {
     this.history = [];
     this.generations = [];
     this.variables = new Map();
@@ -106,6 +106,7 @@ class BaseLLM {
     return Math.random().toString(36).substr(2, 9);
   }
 }
+
 
 export default BaseLLM;
 

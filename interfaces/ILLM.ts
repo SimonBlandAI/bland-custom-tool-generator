@@ -1,3 +1,5 @@
+import { HistoryItem, Generation } from '../llm/llm';
+
 export interface ILLM {
     generate(prompt: string): Promise<string>;
     setModel(model: string): void;
@@ -7,3 +9,4 @@ export interface ILLM {
     getHistory(): HistoryItem[];
     getGenerations(): Generation[];
   }
+

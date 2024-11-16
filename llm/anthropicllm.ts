@@ -1,4 +1,4 @@
-import { CompletionCreateParams, AnthropicClient } from '@anthropic-ai/sdk';
+import Anthropic, { CompletionCreateParams } from '@anthropic-ai/sdk';
 import { ILLM } from '../interfaces/ILLM';
 
 interface Generation {
@@ -22,14 +22,14 @@ class AnthropicLLM implements ILLM {
   private history: HistoryItem[];
   private generations: Generation[];
   private variables: Map<string, string>;
-  private client: AnthropicClient;
+  private client: Anthropic;
   private currentModel: AnthropicModel;
 
   constructor(apiKey: string, model: AnthropicModel = 'claude-2') {
     this.history = [];
     this.generations = [];
     this.variables = new Map();
-    this.client = new AnthropicClient(apiKey);
+    this.client = new Anthropic(apiKey);
     this.currentModel = model;
   }
 
