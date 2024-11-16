@@ -1,7 +1,7 @@
 import { PerplexityLLM } from '../llm/perplexity';
 import { BaseLLM } from '../llm/llm';
-import { UserInputCollector } from '../userInput/userInput';
-import { APIClient } from '../api/api';
+import { UserInputCollector } from '../userInput/userInputCollector';
+import { APIClient } from '../api/apiclient.ts';
 
 export class Orchestrator {
   private perplexity: PerplexityLLM;
