@@ -25,11 +25,11 @@ class AnthropicLLM implements ILLM {
   private client: Anthropic;
   private currentModel: AnthropicModel;
 
-  constructor(apiKey: string, model: AnthropicModel = 'claude-2') {
+  constructor( model: AnthropicModel = 'claude-2') {
     this.history = [];
     this.generations = [];
     this.variables = new Map();
-    this.client = new Anthropic(apiKey);
+    this.client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY ?? '' });
     this.currentModel = model;
   }
 
@@ -44,15 +44,14 @@ class AnthropicLLM implements ILLM {
   }
 
   private async callAnthropicAPI(prompt: string): Promise<string> {
-    const params: Messages.MessageCreateParams = {
+    const params = {
       model: this.currentModel,
-      messages: [{ role: "user", content: prompt }],
+      messages: [{ role: "user" as const, content: prompt }],
       max_tokens: 300,
     };
 
     const response = await this.client.messages.create(params);
-    return response.content[0]["text"] ?? '';
-  }
+    return response.content[0].type === 'text' ? response.content[0].text : '';  }
 
   setModel(model: AnthropicModel): void {
     this.currentModel = model;
