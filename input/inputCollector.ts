@@ -12,16 +12,9 @@ export class UserInputCollector {
 
   async collect(prompt: string): Promise<Record<string, string>> {
     const inputs: Record<string, string> = {};
-    
-    const questions = prompt.split('\n').filter(q => q.trim());
-
-    for (const question of questions) {
-      const answer = await this.askQuestion(question);
-      const key = question.replace(/[?:]/g, '').trim();
-      inputs[key] = answer;
-    }
-
-    this.rl.close();
+    const answer = await this.askQuestion(prompt);
+    const key = prompt.replace(/[?:]/g, '').trim();
+    inputs[key] = answer;
     return inputs;
   }
 
@@ -31,5 +24,11 @@ export class UserInputCollector {
         resolve(answer.trim());
       });
     });
+  }
+
+  public close(): void {
+    if (this.rl) {
+      this.rl.close();
+    }
   }
 }

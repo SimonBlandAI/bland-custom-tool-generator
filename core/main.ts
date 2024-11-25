@@ -10,13 +10,15 @@ async function main() {
   ];
 
   const inputs: Record<string, string> = {};
-  for (const question of questions) {
-    const answer = await inputCollector.collect(question);
-    const key = Object.keys(answer)[0];
-    inputs[key] = answer[key];
+  try {
+    for (const question of questions) {
+      const answer = await inputCollector.collect(question);
+      const key = Object.keys(answer)[0];
+      inputs[key] = answer[key];
+    }
+  } finally {
+    inputCollector.close();
   }
-
-  console.log("Collected inputs:", inputs);
 }
 
 main().catch(console.error);
