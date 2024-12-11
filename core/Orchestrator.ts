@@ -38,12 +38,8 @@ export class Orchestrator {
   async process(query: query): Promise<any> {
     const searchResults = await this.perplexity.generate(prompt(query));
 
-    //const output = await this.llm.updateVariables(searchResults);
+    const output = await this.llm.generate(prompt(searchResults));
 
-
-
-    // will user later 
-    //const apiResponse = await this.apiClient.makeRequest(userInputs);
 
     //return apiResponse;
   }

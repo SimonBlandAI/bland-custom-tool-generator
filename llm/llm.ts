@@ -33,7 +33,8 @@ export class BaseLLM {
   }
 
   async generate(prompt: string): Promise<string> {
-    const completion = await this.callAnthropicAPI(prompt);
+    const updatedPrompt = this.updateVariables(prompt);
+    const completion = await this.callAnthropicAPI(updatedPrompt);
     
     this.addToHistory(prompt, completion);
     this.addGeneration(completion);
